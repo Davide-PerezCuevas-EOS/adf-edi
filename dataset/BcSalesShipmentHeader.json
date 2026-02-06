@@ -1,0 +1,42 @@
+{
+	"name": "BcSalesShipmentHeader",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BcSqlServer",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "BC"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "timestamp",
+				"type": "timestamp"
+			},
+			{
+				"name": "No_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Shpfy Order Id$ec255f57-31d0-4ca2-b751-f2fa7c745abb",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "Shpfy Order No_$ec255f57-31d0-4ca2-b751-f2fa7c745abb",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Shpfy Fulfillment Id$ec255f57-31d0-4ca2-b751-f2fa7c745abb",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ADF Demo$Sales Shipment Header$437dbf0e-84ff-417a-965d-ed2bb9650972"
+		}
+	}
+}
