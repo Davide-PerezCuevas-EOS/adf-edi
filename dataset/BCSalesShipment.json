@@ -1,0 +1,16 @@
+{
+	"name": "BCSalesShipment",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Business Central",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": "https://bc-devhost-dpe.germanywestcentral.cloudapp.azure.com:7048/BC/api/eos/edi/v1.0/companies(e91ccdbd-89fb-f011-86be-f4b67b98bc1d)/salesShipmentHeaders"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

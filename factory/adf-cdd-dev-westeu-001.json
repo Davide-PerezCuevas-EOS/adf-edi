@@ -1,0 +1,9 @@
+{
+	"name": "adf-cdd-dev-westeu-001",
+	"location": "westeurope",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "dda38883-64eb-4a4e-b86e-2460e5234f58",
+		"tenantId": "f5d98b57-33d2-4f91-b46e-221dea9dedd2"
+	}
+}
