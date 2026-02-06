@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "ReadSalesShptHeaderFromBC",
+				"name": "ReadSalesShipmentHeader",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -17,6 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT\n      SalesShipmentHeader.[No_]                      AS ShipmentNo\n     ,[Sell-to Customer No_]                         AS SellToCustomerNo\n     ,[Bill-to Customer No_]                         AS BillToCustomerNo\n     ,[Bill-to Name]                                 AS BillToName\n     ,[Posting Date]                                 AS PostingDate\n     ,[Shipment Date]                                AS ShipmentDate\n     ,[SalesShipmentHeaderExt].[Shpfy Order No_$ec255f57-31d0-4ca2-b751-f2fa7c745abb] AS ShopifyOrderNo\n\nFROM \n    [CRONUS].[dbo].[CDD$Sales Shipment Header$437dbf0e-84ff-417a-965d-ed2bb9650972] AS SalesShipmentHeader\nINNER JOIN\n    [CRONUS].[dbo].[CDD$Sales Shipment Header$437dbf0e-84ff-417a-965d-ed2bb9650972$ext] AS SalesShipmentHeaderExt\nON\n    SalesShipmentHeader.No_ = SalesShipmentHeaderExt.No_\n    \n",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
