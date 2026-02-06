@@ -1,0 +1,537 @@
+{
+	"name": "BcSalesShipmentLine",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BcSqlServer",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "BC"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "timestamp",
+				"type": "timestamp"
+			},
+			{
+				"name": "Document No_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Line No_",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Sell-to Customer No_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Type",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "No_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Location Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Posting Group",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Shipment Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Description",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Description 2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Unit of Measure",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Quantity",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "Unit Price",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "Unit Cost (LCY)",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "VAT _",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "Line Discount _",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "Allow Invoice Disc_",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "Gross Weight",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "Net Weight",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "Units per Parcel",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "Unit Volume",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "Appl_-to Item Entry",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Item Shpt_ Entry No_",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Shortcut Dimension 1 Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Shortcut Dimension 2 Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Customer Price Group",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Job No_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Work Type Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Qty_ Shipped Not Invoiced",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "Quantity Invoiced",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "Order No_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Order Line No_",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Bill-to Customer No_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Purchase Order No_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Purch_ Order Line No_",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Drop Shipment",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "Gen_ Bus_ Posting Group",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Gen_ Prod_ Posting Group",
+				"type": "nvarchar"
+			},
+			{
+				"name": "VAT Calculation Type",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Transaction Type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Transport Method",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Attached to Line No_",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Exit Point",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Area",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Transaction Specification",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Tax Area Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Tax Liable",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "Tax Group Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "VAT Bus_ Posting Group",
+				"type": "nvarchar"
+			},
+			{
+				"name": "VAT Prod_ Posting Group",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Blanket Order No_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Blanket Order Line No_",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "VAT Base Amount",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "Unit Cost",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "IC Partner Ref_ Type",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "IC Partner Reference",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Posting Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "IC Item Reference No_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Dimension Set ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Authorized for Credit Card",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "Job Task No_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Job Contract Entry No_",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Variant Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Bin Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Qty_ per Unit of Measure",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "Unit of Measure Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Quantity (Base)",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "Qty_ Invoiced (Base)",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "FA Posting Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Depreciation Book Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Depr_ until FA Posting Date",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "Duplicate in Depreciation Book",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Use Duplication List",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "Responsibility Center",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Cross-Reference No_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Unit of Measure (Cross Ref_)",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Cross-Reference Type",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Cross-Reference Type No_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Item Category Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Nonstock",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "Purchasing Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Product Group Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Item Reference No_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Item Reference Unit of Measure",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Item Reference Type",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Item Reference Type No_",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Requested Delivery Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Promised Delivery Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Shipping Time",
+				"type": "varchar"
+			},
+			{
+				"name": "Outbound Whse_ Handling Time",
+				"type": "varchar"
+			},
+			{
+				"name": "Planned Delivery Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Planned Shipment Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Appl_-from Item Entry",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Item Charge Base Amount",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "Correction",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "Return Reason Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Price Calculation Method",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Allow Line Disc_",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "Customer Disc_ Group",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Document Id",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "Deductible _",
+				"type": "decimal",
+				"precision": 38,
+				"scale": 20
+			},
+			{
+				"name": "Include in VAT Transac_ Rep_",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "Automatically Generated",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "$systemId",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "$systemCreatedAt",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "$systemCreatedBy",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "$systemModifiedAt",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "$systemModifiedBy",
+				"type": "uniqueidentifier"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ADF Demo$Sales Shipment Line$437dbf0e-84ff-417a-965d-ed2bb9650972"
+		}
+	}
+}
