@@ -36,7 +36,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "ADF Demo$Sales Shipment Header$437dbf0e-84ff-417a-965d-ed2bb9650972$ext"
+			"table": "CDD$Sales Shipment Header$437dbf0e-84ff-417a-965d-ed2bb9650972$ext"
 		}
 	}
 }
