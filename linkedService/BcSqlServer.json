@@ -14,7 +14,7 @@
 			"pooling": "False",
 			"multipleActiveResultSets": "False",
 			"commandTimeout": "0",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIxMGFiZjZhNC1iMDdlLTQ1ZWYtOWY1NC0wYWUyNzBiODBiZTkiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI1NGMxMDI4MS0yYTAwLTQ1NDYtYWNkZi03NzgzZTcyODExNTkiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "DemoSelfHosted",
