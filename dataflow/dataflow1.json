@@ -32,6 +32,9 @@
 				},
 				{
 					"name": "AggregayeByDocNo"
+				},
+				{
+					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -91,7 +94,18 @@
 				"     SellToCustomerNo = max(SellToCustomerNo),",
 				"          BillToCustomerNo = max(BillToCustomerNo),",
 				"          BillToName = max(BillToName),",
-				"          ShipmentDate = max(ShipmentDate)) ~> AggregayeByDocNo"
+				"          ShipmentDate = max(ShipmentDate)) ~> AggregayeByDocNo",
+				"AggregayeByDocNo derive(RecordOrder = 1,",
+				"          LineOrder = 0,",
+				"          SegmentOrder = 10,",
+				"          LineText = concat(\r",
+				"  'BGM',' ',\r",
+				"  'DESADV',' ',\r",
+				"  rpad(toString(ShipmentNo),20,' '),' ',\r",
+				"  rpad(toString(ShipmentDate,'yyyyMMdd'),8,' '),' ',\r",
+				"  '9'\r",
+				")\r",
+				") ~> derivedColumn1"
 			]
 		}
 	}
