@@ -22,12 +22,14 @@
 						"partitionOption": "None"
 					},
 					"sink": {
-						"type": "ParquetSink",
+						"type": "DelimitedTextSink",
 						"storeSettings": {
 							"type": "AzureBlobStorageWriteSettings"
 						},
 						"formatSettings": {
-							"type": "ParquetWriteSettings"
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".csv"
 						}
 					},
 					"enableStaging": false,
@@ -43,7 +45,7 @@
 								"sink": {
 									"name": "ShipmentNo",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								}
 							},
 							{
@@ -55,7 +57,7 @@
 								"sink": {
 									"name": "SellToCustomerNo",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								}
 							},
 							{
@@ -67,7 +69,7 @@
 								"sink": {
 									"name": "BillToCustomerNo",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								}
 							},
 							{
@@ -79,7 +81,7 @@
 								"sink": {
 									"name": "BillToName",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								}
 							},
 							{
@@ -90,8 +92,8 @@
 								},
 								"sink": {
 									"name": "PostingDate",
-									"type": "DateTime",
-									"physicalType": "INT_96"
+									"type": "String",
+									"physicalType": "String"
 								}
 							},
 							{
@@ -102,8 +104,8 @@
 								},
 								"sink": {
 									"name": "ShipmentDate",
-									"type": "DateTime",
-									"physicalType": "INT_96"
+									"type": "String",
+									"physicalType": "String"
 								}
 							},
 							{
@@ -115,7 +117,7 @@
 								"sink": {
 									"name": "ShopifyOrderNo",
 									"type": "String",
-									"physicalType": "UTF8"
+									"physicalType": "String"
 								}
 							}
 						],
@@ -134,18 +136,8 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "SalesShipmentHdrParquet",
-						"type": "DatasetReference",
-						"parameters": {
-							"pDirectory": {
-								"value": "@concat(\n  'raw/sales_shipment/',\n  'date=', formatDateTime(utcNow(),'yyyy-MM-dd'),\n  '/partner=', variables('pPartnerCode')\n)",
-								"type": "Expression"
-							},
-							"pFileName": {
-								"value": "@concat(\n  'sales_shipment_',\n  variables('pPartnerCode'),\n  '_',\n  formatDateTime(utcNow(),'yyyyMMdd'),\n  '.parquet'\n)",
-								"type": "Expression"
-							}
-						}
+						"referenceName": "SalesShptHeaderCSV",
+						"type": "DatasetReference"
 					}
 				]
 			}
