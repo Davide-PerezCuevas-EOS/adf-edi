@@ -47,6 +47,10 @@
 				{
 					"name": "CleanBGM",
 					"description": "Clean BGM segment"
+				},
+				{
+					"name": "CreateDTM2",
+					"description": "Create DTM segments"
 				}
 			],
 			"scriptLines": [
@@ -133,6 +137,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> CleanBGM",
+				"AggregayeByDocNo derive() ~> CreateDTM2",
 				"CleanBGM sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
