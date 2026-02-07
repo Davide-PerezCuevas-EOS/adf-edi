@@ -29,6 +29,9 @@
 				},
 				{
 					"name": "Select"
+				},
+				{
+					"name": "AggregayeByDocNo"
 				}
 			],
 			"scriptLines": [
@@ -83,7 +86,12 @@
 				"          Quantity",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> Select"
+				"     skipDuplicateMapOutputs: true) ~> Select",
+				"Select aggregate(groupBy(ShipmentNo),",
+				"     SellToCustomerNo = max(SellToCustomerNo),",
+				"          BillToCustomerNo = max(BillToCustomerNo),",
+				"          BillToName = max(BillToName),",
+				"          ShipmentDate = max(ShipmentDate)) ~> AggregayeByDocNo"
 			]
 		}
 	}
