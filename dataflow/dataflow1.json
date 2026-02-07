@@ -25,16 +25,24 @@
 			"sinks": [],
 			"transformations": [
 				{
-					"name": "JoinHeaderAndLine"
+					"name": "JoinHeaderAndLine",
+					"description": "Join header and lines"
 				},
 				{
-					"name": "Select"
+					"name": "Select",
+					"description": "Clean duplicate columns"
 				},
 				{
-					"name": "AggregayeByDocNo"
+					"name": "AggregayeByDocNo",
+					"description": "Aggregate header data"
 				},
 				{
-					"name": "derivedColumn1"
+					"name": "CreateBGM",
+					"description": "Create BGM segment"
+				},
+				{
+					"name": "CleanBGM",
+					"description": "Clean BGM segment"
 				}
 			],
 			"scriptLines": [
@@ -99,13 +107,29 @@
 				"          LineOrder = 0,",
 				"          SegmentOrder = 10,",
 				"          LineText = concat(\r",
-				"  'BGM',' ',\r",
-				"  'DESADV',' ',\r",
-				"  rpad(toString(ShipmentNo),20,' '),' ',\r",
-				"  rpad(toString(ShipmentDate,'yyyyMMdd'),8,' '),' ',\r",
-				"  '9'\r",
+				"  rpad('BGM', 3, ' '),\r",
+				"  rpad('03470550180', 35, ' '),\r",
+				"  rpad(' ', 4, ' '),\r",
+				"  rpad(' ', 14, ' '),\r",
+				"  rpad(' ', 35, ' '),\r",
+				"  rpad('ZZ', 4, ' '),\r",
+				"  rpad(' ', 14, ' '),\r",
+				"  'DESADV',\r",
+				"  rpad(toString(ShipmentNo), 35 ,' '),\r",
+				"  rpad(toString(ShipmentDate,'yyyyMMdd'), 8, ' '),\r",
+				"  rpad(' ', 4, ' '),\r",
+				"  rpad(' ', 8, ' '),\r",
+				"  rpad('9 ', 3, ' ')\r",
 				")\r",
-				") ~> derivedColumn1"
+				") ~> CreateBGM",
+				"CreateBGM select(mapColumn(",
+				"          RecordOrder,",
+				"          LineOrder,",
+				"          SegmentOrder,",
+				"          LineText",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> CleanBGM"
 			]
 		}
 	}
