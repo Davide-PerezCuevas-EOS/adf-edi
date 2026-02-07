@@ -1,0 +1,51 @@
+{
+	"name": "SalesShptLineCSV",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AdfStagingBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "adf-staging"
+			},
+			"columnDelimiter": ";",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "ShipmentNo",
+				"type": "String"
+			},
+			{
+				"name": "SellToCustomerNo",
+				"type": "String"
+			},
+			{
+				"name": "BillToCustomerNo",
+				"type": "String"
+			},
+			{
+				"name": "BillToName",
+				"type": "String"
+			},
+			{
+				"name": "PostingDate",
+				"type": "String"
+			},
+			{
+				"name": "ShipmentDate",
+				"type": "String"
+			},
+			{
+				"name": "ShopifyOrderNo",
+				"type": "String"
+			}
+		]
+	}
+}
