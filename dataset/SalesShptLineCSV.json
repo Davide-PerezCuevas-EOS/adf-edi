@@ -5,6 +5,9 @@
 			"referenceName": "AdfStagingBlobStorage",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "BC"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
