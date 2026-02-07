@@ -22,7 +22,11 @@
 					"name": "ReadFromSalesShipmentLine"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"name": "CacheSink"
+				}
+			],
 			"transformations": [
 				{
 					"name": "JoinHeaderAndLine",
@@ -128,7 +132,14 @@
 				"          LineText",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> CleanBGM"
+				"     skipDuplicateMapOutputs: true) ~> CleanBGM",
+				"CleanBGM sink(validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: false,",
+				"     saveOrder: 1) ~> CacheSink"
 			]
 		}
 	}
