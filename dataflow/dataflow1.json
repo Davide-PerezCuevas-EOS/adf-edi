@@ -1,0 +1,33 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"folder": {
+			"name": "EDI-DESADV"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SalesShptHeaderCSV",
+						"type": "DatasetReference"
+					},
+					"name": "ReadFromSalesShptHeaderCSV"
+				},
+				{
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     skipLines: 1) ~> ReadFromSalesShptHeaderCSV",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false) ~> source1"
+			]
+		}
+	}
+}
