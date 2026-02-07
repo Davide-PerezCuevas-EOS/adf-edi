@@ -1,0 +1,24 @@
+{
+	"name": "BcSqlServer",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"server": "bc24cu09it",
+			"database": "CRONUS",
+			"encrypt": "True",
+			"trustServerCertificate": true,
+			"authenticationType": "SQL",
+			"userName": "admin",
+			"pooling": "False",
+			"multipleActiveResultSets": "False",
+			"commandTimeout": "0",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI1NGMxMDI4MS0yYTAwLTQ1NDYtYWNkZi03NzgzZTcyODExNTkiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "DemoSelfHosted",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

@@ -1,0 +1,15 @@
+{
+	"name": "BcSqlServer",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BcSqlServer",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "BC"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": []
+	}
+}

@@ -1,0 +1,26 @@
+{
+	"name": "SalesShptHeaderCSV",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AdfStagingBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "BC"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "raw/sales_shipment_header",
+				"container": "adf-staging"
+			},
+			"columnDelimiter": ";",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

@@ -1,0 +1,246 @@
+{
+	"name": "EDI-DESADV-Pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "ReadSalesShptHeaderIntoCSV",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT\r\n    SalesShipmentHeader.[No_] AS ShipmentNo,\r\n    SalesShipmentHeader.[Sell-to Customer No_] AS SellToCustomerNo,\r\n    SalesShipmentHeader.[Bill-to Customer No_] AS BillToCustomerNo,\r\n    SalesShipmentHeader.[Bill-to Name] AS BillToName,\r\n    SalesShipmentHeader.[Posting Date] AS PostingDate,\r\n    SalesShipmentHeader.[Shipment Date] AS ShipmentDate,\r\n    SalesShipmentHeaderExt.[Shpfy Order No_$ec255f57-31d0-4ca2-b751-f2fa7c745abb] AS ShopifyOrderNo\r\nFROM\r\n    [CRONUS].[dbo].[CDD$Sales Shipment Header$437dbf0e-84ff-417a-965d-ed2bb9650972] AS SalesShipmentHeader\r\nINNER JOIN\r\n    [CRONUS].[dbo].[CDD$Sales Shipment Header$437dbf0e-84ff-417a-965d-ed2bb9650972$ext] AS SalesShipmentHeaderExt\r\n    ON SalesShipmentHeader.No_ = SalesShipmentHeaderExt.No_;\r\n",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".csv"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "ShipmentNo",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "ShipmentNo",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SellToCustomerNo",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "SellToCustomerNo",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BillToCustomerNo",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "BillToCustomerNo",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BillToName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "BillToName",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PostingDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								},
+								"sink": {
+									"name": "PostingDate",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ShipmentDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								},
+								"sink": {
+									"name": "ShipmentDate",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ShopifyOrderNo",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "ShopifyOrderNo",
+									"type": "String",
+									"physicalType": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "BcSqlServer",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SalesShptHeaderCSV",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "ReadSalesShipmenntLineIntoCSV",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "ReadSalesShptHeaderIntoCSV",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT\r\n    L.[Document No_] AS DocumentNo,\r\n    L.[Line No_] AS LineNo_,\r\n    L.[Shipment Date] AS ShipmentDate,\r\n    L.[Posting Date] AS PostingDate,\r\n    L.[Sell-to Customer No_] AS SellToCustomerNo,\r\n    L.[Bill-to Customer No_] AS BillToCustomerNo,\r\n    L.[Location Code] AS LocationCode,\r\n    L.[Order No_] AS OrderNo,\r\n    L.[Purchase Order No_] AS PurchaseOrderNo,\r\n    L.[No_] AS ItemNo,\r\n    L.[Description] AS ItemDescription,\r\n    L.[Unit of Measure Code] AS UnitOfMeasure,\r\n    L.[Quantity] AS Quantity\r\nFROM\r\n    [CRONUS].[dbo].[CDD$Sales Shipment Line$437dbf0e-84ff-417a-965d-ed2bb9650972] AS L;\r\n",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".csv"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "BcSqlServer",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SalesShptLineCSV",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "ReadSalesShipmenntLineIntoCSV",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "CreateDESADVFromStoredData",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"variables": {
+			"pEdiType": {
+				"type": "String"
+			},
+			"pPartnerCode": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}

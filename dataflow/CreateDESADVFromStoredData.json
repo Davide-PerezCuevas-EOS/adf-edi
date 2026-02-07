@@ -1,0 +1,236 @@
+{
+	"name": "CreateDESADVFromStoredData",
+	"properties": {
+		"folder": {
+			"name": "EDI-DESADV"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SalesShptHeaderCSV",
+						"type": "DatasetReference"
+					},
+					"name": "ReadFromSalesShptHeaderCSV"
+				},
+				{
+					"dataset": {
+						"referenceName": "SalesShptLineCSV",
+						"type": "DatasetReference"
+					},
+					"name": "ReadFromSalesShipmentLine"
+				}
+			],
+			"sinks": [
+				{
+					"name": "Debug"
+				}
+			],
+			"transformations": [
+				{
+					"name": "JoinHeaderAndLine",
+					"description": "Join header and lines"
+				},
+				{
+					"name": "Select",
+					"description": "Clean duplicate columns"
+				},
+				{
+					"name": "AggregayeByDocNo",
+					"description": "Aggregate header data"
+				},
+				{
+					"name": "CreateBGM",
+					"description": "Create BGM segment"
+				},
+				{
+					"name": "CleanBGM",
+					"description": "Clean BGM segment"
+				},
+				{
+					"name": "CreateDTM2",
+					"description": "Create DTM segments"
+				},
+				{
+					"name": "CleanDTM2",
+					"description": "Clean DTM segment (2)"
+				},
+				{
+					"name": "UniteRecords"
+				},
+				{
+					"name": "SortRecords",
+					"description": "Sort by record"
+				},
+				{
+					"name": "CreateLIN",
+					"description": "Create LIN Segments"
+				},
+				{
+					"name": "CleanLIN",
+					"description": "Clean LIN segments"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          ShipmentNo as integer,",
+				"          SellToCustomerNo as string,",
+				"          BillToCustomerNo as string,",
+				"          BillToName as string,",
+				"          PostingDate as string,",
+				"          ShipmentDate as string,",
+				"          ShopifyOrderNo as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> ReadFromSalesShptHeaderCSV",
+				"source(output(",
+				"          DocumentNo as integer,",
+				"          LineNo_ as integer,",
+				"          ShipmentDate as string,",
+				"          PostingDate as string,",
+				"          SellToCustomerNo as string,",
+				"          BillToCustomerNo as string,",
+				"          LocationCode as string,",
+				"          OrderNo as integer,",
+				"          PurchaseOrderNo as string,",
+				"          ItemNo as string,",
+				"          ItemDescription as string,",
+				"          UnitOfMeasure as string,",
+				"          Quantity as double",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> ReadFromSalesShipmentLine",
+				"ReadFromSalesShptHeaderCSV, ReadFromSalesShipmentLine join(ShipmentNo == DocumentNo,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> JoinHeaderAndLine",
+				"JoinHeaderAndLine select(mapColumn(",
+				"          ShipmentNo,",
+				"          SellToCustomerNo = ReadFromSalesShptHeaderCSV@SellToCustomerNo,",
+				"          BillToCustomerNo = ReadFromSalesShptHeaderCSV@BillToCustomerNo,",
+				"          BillToName,",
+				"          ShipmentDate = ReadFromSalesShptHeaderCSV@ShipmentDate,",
+				"          LineNo_,",
+				"          LocationCode,",
+				"          OrderNo,",
+				"          PurchaseOrderNo,",
+				"          ItemNo,",
+				"          ItemDescription,",
+				"          UnitOfMeasure,",
+				"          Quantity",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> Select",
+				"Select aggregate(groupBy(ShipmentNo),",
+				"     SellToCustomerNo = max(SellToCustomerNo),",
+				"          BillToCustomerNo = max(BillToCustomerNo),",
+				"          BillToName = max(BillToName),",
+				"          ShipmentDate = max(ShipmentDate)) ~> AggregayeByDocNo",
+				"AggregayeByDocNo derive(ShipmentNo = ShipmentNo,",
+				"          RecordOrder = 1,",
+				"          LineOrder = 0,",
+				"          SegmentOrder = 10,",
+				"          LineText = concat(\r",
+				"  rpad('BGM', 3, ' '),\r",
+				"  rpad('03470550180', 35, ' '),\r",
+				"  rpad(' ', 4, ' '),\r",
+				"  rpad(' ', 14, ' '),\r",
+				"  rpad(' ', 35, ' '),\r",
+				"  rpad('ZZ', 4, ' '),\r",
+				"  rpad(' ', 14, ' '),\r",
+				"  'DESADV',\r",
+				"  rpad(toString(ShipmentNo), 35 ,' '),\r",
+				"  rpad(toString(ShipmentDate,'yyyyMMdd'), 8, ' '),\r",
+				"  rpad(' ', 4, ' '),\r",
+				"  rpad(' ', 8, ' '),\r",
+				"  rpad('9', 3, ' ')\r",
+				")) ~> CreateBGM",
+				"CreateBGM select(mapColumn(",
+				"          ShipmentNo,",
+				"          RecordOrder,",
+				"          LineOrder,",
+				"          SegmentOrder,",
+				"          LineText",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> CleanBGM",
+				"AggregayeByDocNo derive(ShipmentNo = ShipmentNo,",
+				"          RecordOrder = 1,",
+				"          LineOrder = 0,",
+				"          SegmentOrder = 20,",
+				"          LineText = concat(\r",
+				"  'DTM',\r",
+				"  rpad('2', 3, ' '),\r",
+				"  rpad(toString(ShipmentDate,'yyyyMMdd'), 35, ' '),\r",
+				"  rpad(' ', 35, ' '),\r",
+				"  rpad('102', 3, ' ')\r",
+				")) ~> CreateDTM2",
+				"CreateDTM2 select(mapColumn(",
+				"          ShipmentNo,",
+				"          RecordOrder,",
+				"          LineOrder,",
+				"          SegmentOrder,",
+				"          LineText",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> CleanDTM2",
+				"CleanDTM2, CleanBGM, CleanLIN union(byName: true)~> UniteRecords",
+				"UniteRecords sort(asc(ShipmentNo, true),",
+				"     asc(RecordOrder, true),",
+				"     asc(LineOrder, true),",
+				"     asc(SegmentOrder, true)) ~> SortRecords",
+				"Select derive(ShipmentNo = ShipmentNo,",
+				"          RecordOrder = 2,",
+				"          LineOrder = LineNo_,",
+				"          SegmentOrder = 10,",
+				"          LineText = concat(\r",
+				"    'LIN',\r",
+				"    rpad(toString(LineNo_), 6, ' '),\r",
+				"    rpad(ItemNo, 35, ' '),\r",
+				"    rpad('EN', 3, ' '),\r",
+				"    rpad(' ', 35, ' '),\r",
+				"    rpad(' ', 35, ' '),\r",
+				"    rpad(' ', 35, ' '),\r",
+				"    rpad(ItemDescription, 35, ' '),\r",
+				"    rpad(\r",
+				"        lpad(\r",
+				"            replace(toString(toDecimal(Quantity, 15, 3), '0.000'), '.', ''),\r",
+				"            15,\r",
+				"            '0'\r",
+				"        ), 15, ' '\r",
+				"    ),\r",
+				"    rpad('KG', 3, ' '),\r",
+				"    rpad(' ', 15, ' '),\r",
+				"    rpad(' ', 3, ' '),\r",
+				"    rpad(' ', 3, ' '),\r",
+				"    rpad(' ', 3, ' '),\r",
+				"    rpad(' ', 3, ' '),\r",
+				"    rpad(' ', 3, ' ')\r",
+				")) ~> CreateLIN",
+				"CreateLIN select(mapColumn(",
+				"          ShipmentNo,",
+				"          RecordOrder,",
+				"          LineOrder,",
+				"          SegmentOrder,",
+				"          LineText",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> CleanLIN",
+				"SortRecords sink(validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: false,",
+				"     saveOrder: 1,",
+				"     mapColumn(",
+				"          LineText",
+				"     )) ~> Debug"
+			]
+		}
+	}
+}
