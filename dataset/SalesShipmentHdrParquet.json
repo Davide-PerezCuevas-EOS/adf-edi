@@ -1,0 +1,27 @@
+{
+	"name": "SalesShipmentHdrParquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AdfStagingBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"pDirectory": {
+				"type": "string"
+			},
+			"pFileName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "adf-staging"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
