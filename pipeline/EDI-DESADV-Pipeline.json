@@ -49,11 +49,29 @@
 				"outputs": [
 					{
 						"referenceName": "SalesShipmentHdrParquet",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"pDirectory": {
+								"value": "@concat(\n  'raw/sales_shipment/',\n  'date=', formatDateTime(utcNow(),'yyyy-MM-dd'),\n  '/partner=', variables('pPartnerCode')\n)",
+								"type": "Expression"
+							},
+							"pFileName": {
+								"value": "@concat(\n  'sales_shipment_',\n  variables('pPartnerCode'),\n  '_',\n  formatDateTime(utcNow(),'yyyyMMdd'),\n  '.parquet'\n)",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}
 		],
+		"variables": {
+			"pEdiType": {
+				"type": "String"
+			},
+			"pPartnerCode": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
