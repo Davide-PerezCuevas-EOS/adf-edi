@@ -26,30 +26,27 @@
 			"transformations": [
 				{
 					"name": "JoinHeaderAndLine"
+				},
+				{
+					"name": "Select"
 				}
 			],
 			"scriptLines": [
 				"source(output(",
-				"          DocumentNo as integer,",
-				"          LineNo_ as string,",
-				"          ShipmentDate as string,",
-				"          PostingDate as string,",
+				"          ShipmentNo as integer,",
 				"          SellToCustomerNo as string,",
 				"          BillToCustomerNo as string,",
-				"          LocationCode as string,",
-				"          OrderNo as integer,",
-				"          PurchaseOrderNo as string,",
-				"          ItemNo as string,",
-				"          ItemDescription as string,",
-				"          UnitOfMeasure as string,",
-				"          Quantity as double",
+				"          BillToName as string,",
+				"          PostingDate as string,",
+				"          ShipmentDate as string,",
+				"          ShopifyOrderNo as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> ReadFromSalesShptHeaderCSV",
 				"source(output(",
 				"          DocumentNo as integer,",
-				"          LineNo_ as string,",
+				"          LineNo_ as integer,",
 				"          ShipmentDate as string,",
 				"          PostingDate as string,",
 				"          SellToCustomerNo as string,",
@@ -65,11 +62,28 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> ReadFromSalesShipmentLine",
-				"ReadFromSalesShptHeaderCSV, ReadFromSalesShipmentLine join(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
+				"ReadFromSalesShptHeaderCSV, ReadFromSalesShipmentLine join(ShipmentNo == DocumentNo,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> JoinHeaderAndLine"
+				"     broadcast: 'auto')~> JoinHeaderAndLine",
+				"JoinHeaderAndLine select(mapColumn(",
+				"          ShipmentNo,",
+				"          SellToCustomerNo = ReadFromSalesShptHeaderCSV@SellToCustomerNo,",
+				"          BillToCustomerNo = ReadFromSalesShptHeaderCSV@BillToCustomerNo,",
+				"          BillToName,",
+				"          ShipmentDate = ReadFromSalesShptHeaderCSV@ShipmentDate,",
+				"          LineNo_,",
+				"          LocationCode,",
+				"          OrderNo,",
+				"          PurchaseOrderNo,",
+				"          ItemNo,",
+				"          ItemDescription,",
+				"          UnitOfMeasure,",
+				"          Quantity",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> Select"
 			]
 		}
 	}
