@@ -13,7 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "raw/sales_shipment_header",
+				"folderPath": "raw/sales_shipment_line",
 				"container": "adf-staging"
 			},
 			"columnDelimiter": ";",
