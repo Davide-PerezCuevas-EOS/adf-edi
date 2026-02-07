@@ -24,7 +24,7 @@
 			],
 			"sinks": [
 				{
-					"name": "CacheSink"
+					"name": "Debug"
 				}
 			],
 			"transformations": [
@@ -51,6 +51,17 @@
 				{
 					"name": "CreateDTM2",
 					"description": "Create DTM segments"
+				},
+				{
+					"name": "CleanDTM2",
+					"description": "Clean DTM segment (2)"
+				},
+				{
+					"name": "UniteRecords"
+				},
+				{
+					"name": "SortRecords",
+					"description": "Sort by record"
 				}
 			],
 			"scriptLines": [
@@ -111,7 +122,8 @@
 				"          BillToCustomerNo = max(BillToCustomerNo),",
 				"          BillToName = max(BillToName),",
 				"          ShipmentDate = max(ShipmentDate)) ~> AggregayeByDocNo",
-				"AggregayeByDocNo derive(RecordOrder = 1,",
+				"AggregayeByDocNo derive(ShipmentNo = ShipmentNo,",
+				"          RecordOrder = 1,",
 				"          LineOrder = 0,",
 				"          SegmentOrder = 10,",
 				"          LineText = concat(\r",
@@ -130,6 +142,7 @@
 				"  rpad('9', 3, ' ')\r",
 				")) ~> CreateBGM",
 				"CreateBGM select(mapColumn(",
+				"          ShipmentNo,",
 				"          RecordOrder,",
 				"          LineOrder,",
 				"          SegmentOrder,",
@@ -137,14 +150,41 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> CleanBGM",
-				"AggregayeByDocNo derive() ~> CreateDTM2",
-				"CleanBGM sink(validateSchema: false,",
+				"AggregayeByDocNo derive(ShipmentNo = ShipmentNo,",
+				"          RecordOrder = 1,",
+				"          LineOrder = 0,",
+				"          SegmentOrder = 20,",
+				"          LineText = concat(\r",
+				"  'DTM',\r",
+				"  rpad('2', 3, ' '),\r",
+				"  rpad(toString(ShipmentDate,'yyyyMMdd'), 35, ' '),\r",
+				"  rpad(' ', 35, ' '),\r",
+				"  rpad('102', 3, ' ')\r",
+				")) ~> CreateDTM2",
+				"CreateDTM2 select(mapColumn(",
+				"          ShipmentNo,",
+				"          RecordOrder,",
+				"          LineOrder,",
+				"          SegmentOrder,",
+				"          LineText",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> CleanDTM2",
+				"CleanDTM2, CleanBGM union(byName: true)~> UniteRecords",
+				"UniteRecords sort(asc(ShipmentNo, true),",
+				"     asc(RecordOrder, true),",
+				"     asc(LineOrder, true),",
+				"     asc(SegmentOrder, true)) ~> SortRecords",
+				"SortRecords sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     store: 'cache',",
 				"     format: 'inline',",
 				"     output: false,",
-				"     saveOrder: 1) ~> CacheSink"
+				"     saveOrder: 1,",
+				"     mapColumn(",
+				"          LineText",
+				"     )) ~> Debug"
 			]
 		}
 	}
