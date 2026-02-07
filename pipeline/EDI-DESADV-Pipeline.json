@@ -33,6 +33,92 @@
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "ShipmentNo",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "ShipmentNo",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "SellToCustomerNo",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "SellToCustomerNo",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "BillToCustomerNo",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "BillToCustomerNo",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "BillToName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "BillToName",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "PostingDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								},
+								"sink": {
+									"name": "PostingDate",
+									"type": "DateTime",
+									"physicalType": "INT_96"
+								}
+							},
+							{
+								"source": {
+									"name": "ShipmentDate",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								},
+								"sink": {
+									"name": "ShipmentDate",
+									"type": "DateTime",
+									"physicalType": "INT_96"
+								}
+							},
+							{
+								"source": {
+									"name": "ShopifyOrderNo",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "ShopifyOrderNo",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							}
+						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
