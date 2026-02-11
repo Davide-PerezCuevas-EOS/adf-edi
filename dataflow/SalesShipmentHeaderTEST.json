@@ -1,0 +1,43 @@
+{
+	"name": "SalesShipmentHeaderTEST",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SalesShipmentHeaderTESTCSV",
+						"type": "DatasetReference"
+					},
+					"name": "ReadFromSalesShipmentFolder"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
+					"name": "WriteToCSV"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          {ShipmentNo;SellToCustomerNo;BillToCustomerNo;BillToName;PostingDate;ShipmentDate;ShopifyOrderNo} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     skipLines: 1) ~> ReadFromSalesShipmentFolder",
+				"ReadFromSalesShipmentFolder sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          {ShipmentNo;SellToCustomerNo;BillToCustomerNo;BillToName;PostingDate;ShipmentDate;ShopifyOrderNo} as string",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> WriteToCSV"
+			]
+		}
+	}
+}
