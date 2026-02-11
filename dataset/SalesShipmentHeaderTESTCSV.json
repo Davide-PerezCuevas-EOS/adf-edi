@@ -1,0 +1,31 @@
+{
+	"name": "SalesShipmentHeaderTESTCSV",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SalesShipmentHeader",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "BC-TEST"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "raw",
+				"container": "adf-staging"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "ShipmentNo;SellToCustomerNo;BillToCustomerNo;BillToName;PostingDate;ShipmentDate;ShopifyOrderNo",
+				"type": "String"
+			}
+		]
+	}
+}
