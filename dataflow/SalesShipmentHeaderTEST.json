@@ -21,7 +21,11 @@
 					"name": "WriteToCSV"
 				}
 			],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          {ShipmentNo;SellToCustomerNo;BillToCustomerNo;BillToName;PostingDate;ShipmentDate;ShopifyOrderNo} as string",
@@ -30,7 +34,9 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     skipLines: 1) ~> ReadFromSalesShipmentFolder",
-				"ReadFromSalesShipmentFolder sink(allowSchemaDrift: true,",
+				"ReadFromSalesShipmentFolder derive({Test col} = ERROR_FUNCTION(''),",
+				"          column2 = ERROR_FUNCTION('')) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          {ShipmentNo;SellToCustomerNo;BillToCustomerNo;BillToName;PostingDate;ShipmentDate;ShopifyOrderNo} as string",
